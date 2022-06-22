@@ -99,7 +99,7 @@ button:hover {
     user-select: none;
     text-align: center;
     line-height: 100px;
-    background: rgb(245, 245, 207);
+    background: rgb(253, 236, 204);
 }
 
 .card.flipped .card-front {
