@@ -17,3 +17,9 @@ After each card is matched to it's identical counterpart; the game is over! Your
 
 Citations:
 
+*generateGame function in game.js line 63
+https://www.geeksforgeeks.org/how-to-get-all-html-content-from-domparser-excluding-the-outer-body-tag/
+
+*eventListeners for attachEventListeners function (clicking / flipping)
+https://www.w3schools.com/js/js_htmldom_eventlistener.asp
+
