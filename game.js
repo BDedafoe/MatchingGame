@@ -1,6 +1,5 @@
 //Defining the game's variables using DOM elements
 let cardArray =  ['⚽️', '🏀', '🏈', '🥎', '🎱', '🎾', '🏐', '⛳️', '🏆', '🎳']
-
 let selectors = {
     boardContainer: document.querySelector('.board-container'),
     board: document.querySelector('.board'),
@@ -18,7 +17,7 @@ let state = {
     totalTime: 0,
 }
 
-const shuffle = cardArray => {
+let shuffle = cardArray => {
 
     for (let index = cardArray.length - 1; index > 0; index--) {
         const randomIndex = Math.floor(Math.random() * (index + 1))
@@ -31,9 +30,9 @@ const shuffle = cardArray => {
     return cardArray
 }
 
-const pickRandom = (cardArray, items) => {
+let pickRandom = (cardArray, items) => {
  
-    const randomPicks = []
+    let randomPicks = []
 
     for (let index = 0; index < items; index++) {
         const randomIndex = Math.floor(Math.random() * cardArray.length)
@@ -45,9 +44,9 @@ const pickRandom = (cardArray, items) => {
     return randomPicks
 }
 
-const generateGame = () => {
+let generateGame = () => {
     const dimensions = selectors.board.getAttribute('data-dimension')           //dimensions of the game board provided on index.html
-    const emojis = cardArray                                                    //emojis representing the pictures for each card turnover
+    const emojis = cardArray                                                    //emojis representing the pictures from the cardArray
     const picks = pickRandom(emojis, (dimensions * dimensions) / 2)            //picks the emojis by random and divides by 2 as there are 2 per match
     const items = shuffle([...picks, ...picks])
     const cards = `
@@ -66,7 +65,7 @@ const generateGame = () => {
     selectors.board.replaceWith(parser.querySelector('.board'))
 }
 
-const startGame = () => {
+let startGame = () => {
     state.gameStarted = true
     selectors.start.classList.add('disabled')  //The font color of the "start" button will change once the game begins
 
@@ -80,7 +79,7 @@ const startGame = () => {
     
 }
 
-const flipBackCards = () => {
+let flipBackCards = () => {
     document.querySelectorAll('.card:not(.matched)').forEach(card => {
         card.classList.remove('flipped')
     })
@@ -88,7 +87,7 @@ const flipBackCards = () => {
     state.flippedCards = 0
 }
 
-const flipCard = card => {
+let flipCard = card => {
     state.flippedCards++
     state.totalFlips++
 
@@ -119,7 +118,7 @@ const flipCard = card => {
             selectors.boardContainer.classList.add('flipped')           //You won card with text. Displays only when the game is finsihed
             selectors.win.innerHTML = `<span class="win-text">                                 
                     You won!<br/>
-                    with <span class="highlight">${state.totalFlips}</span> moves <br/>
+                    with <span class="highlight">${state.totalFlips}</span> moves <br/>  
                     under <span class="highlight">${state.totalTime}</span> seconds
                 </span>`
             clearInterval(state.loop)
@@ -127,7 +126,7 @@ const flipCard = card => {
     }
 }
 
-const attachEventListeners = () => {
+let attachEventListeners = () => {
     document.addEventListener('click', event => {
         const eventTarget = event.target
         const eventParent = eventTarget.parentElement
