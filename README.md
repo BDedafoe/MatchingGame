@@ -23,3 +23,5 @@ https://www.geeksforgeeks.org/how-to-get-all-html-content-from-domparser-excludi
 *eventListeners for attachEventListeners function (clicking / flipping)
 https://www.w3schools.com/js/js_htmldom_eventlistener.asp
 
+*shuffle and pickRandom functions
+https://stackoverflow.com/questions/5915096/get-a-random-item-from-a-javascript-array
