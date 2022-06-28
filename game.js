@@ -1,3 +1,4 @@
+//Defining the game's variables using DOM elements
 const selectors = {
     boardContainer: document.querySelector('.board-container'),
     board: document.querySelector('.board'),
@@ -7,7 +8,8 @@ const selectors = {
     win: document.querySelector('.win')
 }
 
-const state = {
+//Default state of each start
+const state = {                 
     gameStarted: false,
     flippedCards: 0,
     totalFlips: 0,
@@ -44,14 +46,9 @@ const pickRandom = (array, items) => {
 }
 
 const generateGame = () => {
-    const dimensions = selectors.board.getAttribute('data-dimension')
-
-    if (dimensions % 2 !== 0) {
-        throw new Error("The dimension of the board must be an even number.")
-    }
-
-    const emojis = ['⚽️', '🏀', '🏈', '🥎', '🎱', '🎾', '🏐', '⛳️', '🏆', '🎳']
-    const picks = pickRandom(emojis, (dimensions * dimensions) / 2) 
+    const dimensions = selectors.board.getAttribute('data-dimension')           //dimensions of the game board provided on index.html
+    const emojis = ['⚽️', '🏀', '🏈', '🥎', '🎱', '🎾', '🏐', '⛳️', '🏆', '🎳']     //emojis representing the pictures for each card turnover
+    const picks = pickRandom(emojis, (dimensions * dimensions) / 2)            //picks the emojis by random and divides by 2 as there are 2 per match
     const items = shuffle([...picks, ...picks])
     const cards = `
         <div class="board" style="grid-template-columns: repeat(${dimensions}, auto)">
@@ -79,6 +76,8 @@ const startGame = () => {
         selectors.moves.innerText = `${state.totalFlips} moves`
         selectors.timer.innerText = `time: ${state.totalTime} sec`
     }, 1000)
+
+    
 }
 
 const flipBackCards = () => {
@@ -114,14 +113,14 @@ const flipCard = card => {
         }, 1000)
     }
 
-    // If there are no more cards that we can flip, we won the game
-    if (!document.querySelectorAll('.card:not(.flipped)').length) {
+   
+    if (!document.querySelectorAll('.card:not(.flipped)').length) {     //Function to start when all cards have been matched; winning the game
         setTimeout(() => {
             selectors.boardContainer.classList.add('flipped')
             selectors.win.innerHTML = `
                 <span class="win-text">
                     You won!<br />
-                    with <span class="highlight">${state.totalFlips}</span> moves<br />
+                    with <span class="highlight">${state.totalFlips}</span> moves<br/>
                     under <span class="highlight">${state.totalTime}</span> seconds
                 </span>
             `
@@ -144,5 +143,5 @@ const attachEventListeners = () => {
     })
 }
 
-generateGame()
-attachEventListeners()
+generateGame()                  //Calling the function generateGame 
+attachEventListeners()          //Calling the use of eventListeners
