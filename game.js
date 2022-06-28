@@ -1,5 +1,7 @@
 //Defining the game's variables using DOM elements
-const selectors = {
+let cardArray =  ['⚽️', '🏀', '🏈', '🥎', '🎱', '🎾', '🏐', '⛳️', '🏆', '🎳']
+
+let selectors = {
     boardContainer: document.querySelector('.board-container'),
     board: document.querySelector('.board'),
     moves: document.querySelector('.moves'),
@@ -9,37 +11,35 @@ const selectors = {
 }
 
 //Default state of each start
-const state = {                 
+let state = {                 
     gameStarted: false,
     flippedCards: 0,
     totalFlips: 0,
     totalTime: 0,
-    loop: null
 }
 
-const shuffle = array => {
-    const clonedArray = [...array]
+const shuffle = cardArray => {
 
-    for (let index = clonedArray.length - 1; index > 0; index--) {
+    for (let index = cardArray.length - 1; index > 0; index--) {
         const randomIndex = Math.floor(Math.random() * (index + 1))
-        const original = clonedArray[index]
+        const original = cardArray[index]
 
-        clonedArray[index] = clonedArray[randomIndex]
-        clonedArray[randomIndex] = original
+        cardArray[index] = cardArray[randomIndex]
+        cardArray[randomIndex] = original
     }
 
-    return clonedArray
+    return cardArray
 }
 
-const pickRandom = (array, items) => {
-    const clonedArray = [...array]
+const pickRandom = (cardArray, items) => {
+ 
     const randomPicks = []
 
     for (let index = 0; index < items; index++) {
-        const randomIndex = Math.floor(Math.random() * clonedArray.length)
+        const randomIndex = Math.floor(Math.random() * cardArray.length)
         
-        randomPicks.push(clonedArray[randomIndex])
-        clonedArray.splice(randomIndex, 1)
+        randomPicks.push(cardArray[randomIndex])
+        cardArray.splice(randomIndex, 1)
     }
 
     return randomPicks
@@ -47,7 +47,7 @@ const pickRandom = (array, items) => {
 
 const generateGame = () => {
     const dimensions = selectors.board.getAttribute('data-dimension')           //dimensions of the game board provided on index.html
-    const emojis = ['⚽️', '🏀', '🏈', '🥎', '🎱', '🎾', '🏐', '⛳️', '🏆', '🎳']     //emojis representing the pictures for each card turnover
+    const emojis = cardArray                                                    //emojis representing the pictures for each card turnover
     const picks = pickRandom(emojis, (dimensions * dimensions) / 2)            //picks the emojis by random and divides by 2 as there are 2 per match
     const items = shuffle([...picks, ...picks])
     const cards = `
@@ -68,13 +68,13 @@ const generateGame = () => {
 
 const startGame = () => {
     state.gameStarted = true
-    selectors.start.classList.add('disabled')
+    selectors.start.classList.add('disabled')  //The font color of the "start" button will change once the game begins
 
     state.loop = setInterval(() => {
         state.totalTime++
 
-        selectors.moves.innerText = `${state.totalFlips} moves`
-        selectors.timer.innerText = `time: ${state.totalTime} sec`
+        selectors.moves.innerText = `${state.totalFlips} moves`       //counting of number of flips to win
+        selectors.timer.innerText = `time: ${state.totalTime} sec`   //counting the time it takes to win. 1 Second increments
     }, 1000)
 
     
@@ -116,15 +116,12 @@ const flipCard = card => {
    
     if (!document.querySelectorAll('.card:not(.flipped)').length) {     //Function to start when all cards have been matched; winning the game
         setTimeout(() => {
-            selectors.boardContainer.classList.add('flipped')
-            selectors.win.innerHTML = `
-                <span class="win-text">
-                    You won!<br />
-                    with <span class="highlight">${state.totalFlips}</span> moves<br/>
+            selectors.boardContainer.classList.add('flipped')           //You won card with text. Displays only when the game is finsihed
+            selectors.win.innerHTML = `<span class="win-text">                                 
+                    You won!<br/>
+                    with <span class="highlight">${state.totalFlips}</span> moves <br/>
                     under <span class="highlight">${state.totalTime}</span> seconds
-                </span>
-            `
-
+                </span>`
             clearInterval(state.loop)
         }, 1000)
     }
