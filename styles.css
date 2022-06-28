@@ -2,12 +2,13 @@ html {
     background: black;
     color: white;
     font-family: sans-serif;
+    
 }
 
 
 .game {
     position: absolute;
-    top: 50%;
+    top: 52%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -39,12 +40,13 @@ button:hover {
 }
 
 .disabled {
-    color: #757575;
+    color: white;
 }
 
 .stats {
-    color: #FFF;
-    font-size: 14pt;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow';
+    font-size: 2em;
 }
 
 .board-container {

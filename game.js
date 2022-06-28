@@ -1,5 +1,5 @@
 //Defining the game's variables using DOM elements
-let cardArray =  ['⚽️', '🏀', '🏈', '🥎', '🎱', '🎾', '🏐', '⛳️', '🏆', '🎳']
+let cardArray =  ['⚽️', '🏀', '🏈', '🥎', '🎱', '🎾', '🏐', '⛳️', '🏆', '🎳', '🥊', '🏒', '🚴‍♀️', '🏄‍♂️', '🥍', '🥌', '🎮', '🪂']
 let selectors = {
     boardContainer: document.querySelector('.board-container'),
     board: document.querySelector('.board'),
@@ -9,8 +9,8 @@ let selectors = {
     win: document.querySelector('.win')
 }
 
-//Default state of each start
-let state = {                 
+//Default gameboard before each game starts
+let gameBoard = {                 
     gameStarted: false,
     flippedCards: 0,
     totalFlips: 0,
@@ -66,14 +66,14 @@ let generateGame = () => {
 }
 
 let startGame = () => {
-    state.gameStarted = true
+    gameBoard.gameStarted = true
     selectors.start.classList.add('disabled')  //The font color of the "start" button will change once the game begins
 
-    state.loop = setInterval(() => {
-        state.totalTime++
+    gameBoard.loop = setInterval(() => {
+        gameBoard.totalTime++
 
-        selectors.moves.innerText = `${state.totalFlips} moves`       //counting of number of flips to win
-        selectors.timer.innerText = `time: ${state.totalTime} sec`   //counting the time it takes to win. 1 Second increments
+        selectors.moves.innerText = `${gameBoard.totalFlips} Moves`       //counting of number of flips to win
+        selectors.timer.innerText = `Time: ${gameBoard.totalTime} Seconds`   //counting the time it takes to win. 1 Second increments
     }, 1000)
 
     
@@ -84,22 +84,22 @@ let flipBackCards = () => {
         card.classList.remove('flipped')
     })
 
-    state.flippedCards = 0
+    gameBoard.flippedCards = 0
 }
 
 let flipCard = card => {
-    state.flippedCards++
-    state.totalFlips++
+    gameBoard.flippedCards++
+    gameBoard.totalFlips++
 
-    if (!state.gameStarted) {
+    if (!gameBoard.gameStarted) {
         startGame()
     }
 
-    if (state.flippedCards <= 2) {
+    if (gameBoard.flippedCards <= 2) {
         card.classList.add('flipped')
     }
 
-    if (state.flippedCards === 2) {
+    if (gameBoard.flippedCards === 2) {
         const flippedCards = document.querySelectorAll('.flipped:not(.matched)')
 
         if (flippedCards[0].innerText === flippedCards[1].innerText) {
@@ -118,10 +118,10 @@ let flipCard = card => {
             selectors.boardContainer.classList.add('flipped')           //You won card with text. Displays only when the game is finsihed
             selectors.win.innerHTML = `<span class="win-text">                                 
                     You won!<br/>
-                    with <span class="highlight">${state.totalFlips}</span> moves <br/>  
-                    under <span class="highlight">${state.totalTime}</span> seconds
+                    with <span class="highlight">${gameBoard.totalFlips}</span> moves <br/>  
+                    under <span class="highlight">${gameBoard.totalTime}</span> seconds
                 </span>`
-            clearInterval(state.loop)
+            clearInterval(gameBoard.loop)
         }, 1000)
     }
 }
