@@ -1,0 +1,15 @@
+@function color-variation($colors) {
+    @if map-has-key($colors, $colors) {
+      @return map-get($colors, $colors);
+    }
+    
+    @error "Invalid color name: `#{$colors}`.";
+  }
+
+@function px-to-em($value, $base-font-size: 16px) {
+  @if unitless($value) {
+    @warn 'Assuming value `#{$value}` to be in pixels; attempting to convert it.';
+    $value: $value * 1px;
+  }
+  @return ($value / $base-font-size) * 1em;
+}

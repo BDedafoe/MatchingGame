@@ -1,0 +1,12 @@
+@function text-color-picker($colors) {
+    @if(lightness($colors) > 70) {
+        @return black;
+    } @else {
+        @return white;
+    }
+}
+
+@mixin set-bg($color) {
+    background-color: $color;
+    color: text-color-picker($color)
+  }

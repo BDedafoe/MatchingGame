@@ -1,0 +1,13 @@
+@import '../config/config';
+
+$colors: (
+  $mainTextColor: white,
+  $secondaryColor: black,
+  $gameScoreColor: #6f00fc,
+  $buttonColor: hotpink,
+);
+
+body {
+  @debug $colors;
+  @debug $myFont;
+}

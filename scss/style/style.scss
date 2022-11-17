@@ -1,0 +1,141 @@
+// variables
+@import '../config/config';
+@import '../debug/debug';
+@import '../error/error';
+@import '../utilities/utilities';
+
+// Nested selectors
+body {
+    background: $secondaryColor;
+    font-family: $myFont;
+
+    .game {
+        position: $gamePosition;
+        margin-top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .controls {
+        display: flex;
+        gap: $paddingGap;
+        margin-bottom: $paddingGap;
+    }
+    .stats {
+        color: $mainTextColor;
+        font-family: $myFont;
+        font-size: $fontSize;
+
+        .timer {
+            color: $buttonColor;
+        }
+    }
+}
+
+button {
+    background-color: $buttonColor;
+    border-radius: 30px;
+    color: $secondaryColor;
+    padding: 16px 32px;
+    text-align: $gameAlignment;
+    font-size: $fontSize;
+    opacity: 0.6;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: $gamePointer;
+    font-family: $myFont; 
+
+    &:hover {
+        opacity: 1
+    }
+}
+
+
+.disabled {
+    color: $mainTextColor;
+}
+
+.board-container {
+    position: relative;
+
+    &.board-container.flipped .board {
+        transform: $rotate180;
+    }
+    
+    &.board-container.flipped .win {
+        transform: $rotate0;
+    }
+
+    .board, .win {
+        border-radius: 5px;
+        box-shadow: 0 25px 50px rgb(33 33 33 / 25%);
+        background: linear-gradient(135deg,  blue 0%, aqua 25%,#9703fa 100%);
+        transition: transform .6s cubic-bezier(0.4, 0.0, 0.2, 1);
+        backface-visibility: hidden;
+    }
+}
+
+.board {
+    padding: $paddingGap;
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    grid-gap: $paddingGap;
+}
+
+.card {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    cursor: $gamePointer;
+
+    &.card.flipped .card-front {
+        transform: $rotate180;
+    }
+    
+    &.card.flipped .card-back {
+        transform: $rotate0;
+    }
+
+    .card-back {
+        transform: $rotate180;
+        font-size: 28pt;
+        user-select: none;
+        text-align: $gameAlignment;
+        line-height: 100px;
+        background: $cardBackBackground;
+    }
+}
+
+.card-front, .card-back {
+    position: $gamePosition;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    background: $cardFrontBackground;
+    transition: transform .6s cubic-bezier(0.4, 0.0, 0.2, 1);
+    backface-visibility: hidden;
+}
+
+.win {
+    position: $gamePosition;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: $gameAlignment;
+    background: $gameboardBackground;
+    transform: $rotate180;
+}
+
+.win-text {
+    position: $gamePosition;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: $fontSize;
+    color: $secondaryColor;
+
+    .highlight {
+        color: $gameScoreColor;
+    }
+}
