@@ -1,5 +1,5 @@
 //Defining the game's variables using DOM elements
-let cardArray =  ['⚽️', '🏀', '🏈', '🥎', '🎱', '🎾', '🏐', '⛳️', '🏆', '🎳', '🥊', '🏒', '🚴‍♀️', '🏄‍♂️', '🥍', '🥌', '🎮', '🪂']
+let cardArray: string [] =  ['⚽️', '🏀', '🏈', '🥎', '🎱', '🎾', '🏐', '⛳️', '🏆', '🎳', '🥊', '🏒', '🚴‍♀️', '🏄‍♂️', '🥍', '🥌', '🎮', '🪂']
 let selectors = {
     boardContainer: document.querySelector('.board-container'),
     board: document.querySelector('.board'),
@@ -8,7 +8,6 @@ let selectors = {
     start: document.querySelector('button'),
     win: document.querySelector('.win')
 }
-
 //Default gameboard before each game starts
 let gameBoard = {                 
     gameStarted: false,
@@ -17,7 +16,7 @@ let gameBoard = {
     totalTime: 0,
 }
 
-let shuffle = cardArray => {
+const shuffle = (cardArray: string []| string[]) => {
 
     for (let index = cardArray.length - 1; index > 0; index--) {
         const randomIndex = Math.floor(Math.random() * (index + 1))
@@ -30,7 +29,7 @@ let shuffle = cardArray => {
     return cardArray
 }
 
-let pickRandom = (cardArray, items) => {
+let pickRandom = (cardArray: string []| string[], items: number) => {
  
     let randomPicks = []
 
@@ -45,7 +44,7 @@ let pickRandom = (cardArray, items) => {
 }
 
 let generateGame = () => {
-    const dimensions = selectors.board.getAttribute('data-dimension')           //dimensions of the game board provided on index.html
+    const dimensions: any =  selectors.board as HTMLElement | any;getAttribute('data-dimension')           //dimensions of the game board provided on index.html
     const emojis = cardArray                                                    //emojis representing the pictures from the cardArray
     const picks = pickRandom(emojis, (dimensions * dimensions) / 2)            //picks the emojis by random and divides by 2 as there are 2 per match
     const items = shuffle([...picks, ...picks])
@@ -62,21 +61,22 @@ let generateGame = () => {
     
     const parser = new DOMParser().parseFromString(cards, 'text/html')
 
-    selectors.board.replaceWith(parser.querySelector('.board'))
+    selectors.board as HTMLElement | null;replaceWith(parser.querySelector('.board')) 
 }
 
 let startGame = () => {
     gameBoard.gameStarted = true
-    selectors.start.classList.add('disabled')  //The font color of the "start" button will change once the game begins
+    selectors.start as unknown as HTMLCollectionOf<HTMLElement>;add('disabled')  //The font color of the "start" button will change once the game begins
 
-    gameBoard.loop = setInterval(() => {
+    type loop = {
+        [key: string]: string | number;
+      };
+
+    gameBoard as unknown as HTMLCollectionOf<HTMLElement>;setInterval(() => {
         gameBoard.totalTime++
 
-        selectors.moves.innerText = `${gameBoard.totalFlips} Moves`       //counting of number of flips to win
-        selectors.timer.innerText = `Time: ${gameBoard.totalTime} Seconds`   //counting the time it takes to win. 1 Second increments
-    }, 1000)
-
-    
+        selectors.moves as unknown as HTMLCollectionOf<HTMLElement>;        
+        selectors.timer as unknown as HTMLCollectionOf<HTMLElement>;    }, 1000)
 }
 
 let flipBackCards = () => {
@@ -87,7 +87,7 @@ let flipBackCards = () => {
     gameBoard.flippedCards = 0
 }
 
-let flipCard = card => {
+let flipCard = (card: { classList: { add: (arg0: string) => void } }) => {
     gameBoard.flippedCards++
     gameBoard.totalFlips++
 
@@ -100,7 +100,7 @@ let flipCard = card => {
     }
 
     if (gameBoard.flippedCards === 2) {
-        const flippedCards = document.querySelectorAll('.flipped:not(.matched)')
+        const flippedCards: any = document.querySelectorAll('.flipped:not(.matched)')
 
         if (flippedCards[0].innerText === flippedCards[1].innerText) {
             flippedCards[0].classList.add('matched')
@@ -115,23 +115,18 @@ let flipCard = card => {
    
     if (!document.querySelectorAll('.card:not(.flipped)').length) {     //Function to start when all cards have been matched; winning the game
         setTimeout(() => {
-            selectors.boardContainer.classList.add('flipped')           //You won card with text. Displays only when the game is finsihed
-            selectors.win.innerHTML = `<span class="win-text">                                 
-                    You won!<br/>
-                    with <span class="highlight">${gameBoard.totalFlips}</span> moves <br/>  
-                    under <span class="highlight">${gameBoard.totalTime}</span> seconds
-                </span>`
-            clearInterval(gameBoard.loop)
+            selectors.boardContainer as HTMLElement | any;add('flipped')     //You won card with text. Displays only when the game is finsihed
+            selectors.win as unknown as HTMLCollectionOf<HTMLElement>;            clearInterval(gameBoard,loop)
         }, 1000)
     }
 }
 
 let attachEventListeners = () => {
     document.addEventListener('click', event => {
-        const eventTarget = event.target
-        const eventParent = eventTarget.parentElement
+        const eventTarget: any = event.target
+        const eventParent = eventTarget  
 
-        if (eventTarget.className.includes('card') && !eventParent.className.includes('flipped')) {
+        if (eventTarget.includes('card') && !eventParent.className.includes('flipped') as unknown as HTMLCollectionOf<HTMLElement>) {
             flipCard(eventParent)
         } else if (eventTarget.nodeName === 'BUTTON' && !eventTarget.className.includes('disabled')) {
             startGame()
@@ -141,3 +136,24 @@ let attachEventListeners = () => {
 
 generateGame()                  //Calling the function generateGame 
 attachEventListeners()          //Calling the use of eventListeners
+
+function replaceWith(arg0: any) {
+    throw new Error("Function not implemented.")
+}
+
+function getAttribute(arg0: string) {
+    throw new Error("Function not implemented.")
+}
+
+function add(arg0: string) {
+    throw new Error("Function not implemented.")
+}
+
+function includes(arg0: string) {
+    throw new Error("Function not implemented.")
+}
+
+function loop(gameBoard: { gameStarted: boolean; flippedCards: number; totalFlips: number; totalTime: number }, loop: any) {
+    throw new Error("Function not implemented.")
+}
+

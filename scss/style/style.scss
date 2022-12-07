@@ -9,6 +9,10 @@ body {
     background: $secondaryColor;
     font-family: $myFont;
 
+    h1 {
+        color: $gameScoreColor;
+    }
+
     .game {
         position: $gamePosition;
         margin-top: 50%;
